@@ -1,7 +1,7 @@
 package com.an.vo;
 /**
  * 
- * @author 疯狂的蜗牛君_
+ * @author 
  *
  */
 public class testUtils {
