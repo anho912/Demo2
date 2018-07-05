@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * 订单扩展类
  * 
- * @author 疯狂的蜗牛君_
+ * @author 订单
  *
  */
 public class OrderVo {

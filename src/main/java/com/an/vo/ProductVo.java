@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * 商品扩展类
  * 
- * @author
+ * @author 商品
  *
  */
 public class ProductVo {
