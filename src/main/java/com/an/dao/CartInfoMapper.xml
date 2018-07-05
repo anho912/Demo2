@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.an.dao.CartInfoMapper">
+	<resultMap id="BaseResultMap" type="com.an.entity.CartInfo">
+		<id column="c_info_id" property="cInfoId" jdbcType="INTEGER" />
+		<result column="cart_id" property="cartId" jdbcType="INTEGER" />
+		<result column="pro_id" property="proId" jdbcType="INTEGER" />
+		<result column="pro_num" property="proNum" jdbcType="INTEGER" />
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		c_info_id, cart_id, pro_id, pro_num, create_date
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from tb_cartinfo
+		where c_info_id = #{cInfoId,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from tb_cartinfo
+		where c_info_id = #{cInfoId,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.an.entity.CartInfo">
+		insert into tb_cartinfo (c_info_id, cart_id, pro_id,
+		pro_num, create_date)
+		values (#{cInfoId,jdbcType=INTEGER}, #{cartId,jdbcType=INTEGER},
+		#{proId,jdbcType=INTEGER},
+		#{proNum,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP})
+	</insert>
+	<insert id="insertSelective" parameterType="com.an.entity.CartInfo">
+		insert into tb_cartinfo
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="cInfoId != null">
+				c_info_id,
+			</if>
+			<if test="cartId != null">
+				cart_id,
+			</if>
+			<if test="proId != null">
+				pro_id,
+			</if>
+			<if test="proNum != null">
+				pro_num,
+			</if>
+			<if test="createDate != null">
+				create_date,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="cInfoId != null">
+				#{cInfoId,jdbcType=INTEGER},
+			</if>
+			<if test="cartId != null">
+				#{cartId,jdbcType=INTEGER},
+			</if>
+			<if test="proId != null">
+				#{proId,jdbcType=INTEGER},
+			</if>
+			<if test="proNum != null">
+				#{proNum,jdbcType=INTEGER},
+			</if>
+			<if test="createDate != null">
+				#{createDate,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.an.entity.CartInfo">
+		update tb_cartinfo
+		<set>
+			<if test="cartId != null">
+				cart_id = #{cartId,jdbcType=INTEGER},
+			</if>
+			<if test="proId != null">
+				pro_id = #{proId,jdbcType=INTEGER},
+			</if>
+			<if test="proNum != null">
+				pro_num = #{proNum,jdbcType=INTEGER},
+			</if>
+			<if test="createDate != null">
+				create_date = #{createDate,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where c_info_id = #{cInfoId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.an.entity.CartInfo">
+		update tb_cartinfo
+		set cart_id = #{cartId,jdbcType=INTEGER},
+		pro_id = #{proId,jdbcType=INTEGER},
+		pro_num = #{proNum,jdbcType=INTEGER},
+		create_date = #{createDate,jdbcType=TIMESTAMP}
+		where c_info_id = #{cInfoId,jdbcType=INTEGER}
+	</update>
+
+	<!-- 根据购物车id查询购物车详情 -->
+	<select id="findByCartId" resultMap="BaseResultMap">
+		select *
+		from tb_cartinfo where cart_id=#{arg0}
+	</select>
+
+	<!-- 根据商品查询购物车详情 -->
+	<select id="findByProduct" resultMap="BaseResultMap">
+		select *
+		from tb_cartinfo where pro_id=#{arg0}
+	</select>
+	
+	<!-- 查询总记录数 -->
+	<select id="selectPageCount" parameterType="java.lang.Integer"
+		resultType="java.lang.Long">
+		select count(1) from tb_cartinfo ci where ci.cart_id like
+		#{cartId}
+	</select>
+	
+	<!-- 分页查询 -->
+	<select id="findDataByPageAndCount" resultMap="BaseResultMap">
+		select * from
+		tb_cartinfo ci where ci.cart_id like #{arg2} limit #{arg1},#{arg0}
+	</select>
+	
+	<!-- 根据详情id更新购物车 -->
+	<update id="updateByCartId" parameterType="com.an.entity.CartInfo">
+		update tb_cartinfo
+		set cart_id = #{cartId},
+		pro_id = #{proId},
+		pro_num = #{proNum},
+		create_date = #{createDate}
+		where c_info_id = #{cInfoId}
+	</update>
+	
+	<!-- 根据商品删除购物车清单 -->
+	<delete id="delectByPro" parameterType="java.lang.Integer">
+		delete from tb_cartinfo
+		where pro_id = #{arg0}
+	</delete>
+	
+</mapper>

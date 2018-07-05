@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.an.dao.OrderInfoMapper">
+	<resultMap id="BaseResultMap" type="com.an.entity.OrderInfo">
+		<id column="o_info_id" property="oInfoId" jdbcType="INTEGER" />
+		<result column="order_id" property="orderId" jdbcType="INTEGER" />
+		<result column="pro_id" property="proId" jdbcType="INTEGER" />
+		<result column="pro_num" property="proNum" jdbcType="INTEGER" />
+		<result column="receiverAddress" property="receiveraddress"
+			jdbcType="VARCHAR" />
+		<result column="receiverPhone" property="receiverphone"
+			jdbcType="VARCHAR" />
+		<result column="receiverName" property="receivername" jdbcType="VARCHAR" />
+		<result column="o_info_money" property="oInfoMoney" jdbcType="DOUBLE" />
+		<result column="payState" property="paystate" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		o_info_id, order_id, pro_id, pro_num, receiverAddress,
+		receiverPhone,
+		receiverName,
+		o_info_money, payState
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from tb_orderinfo
+		where o_info_id = #{oInfoId,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		tb_orderinfo
+		where o_info_id = #{oInfoId,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.an.entity.OrderInfo">
+		insert into tb_orderinfo
+		(o_info_id, order_id, pro_id,
+		pro_num, receiverAddress, receiverPhone,
+		receiverName, o_info_money, payState
+		)
+		values
+		(#{oInfoId,jdbcType=INTEGER}, #{orderId,jdbcType=INTEGER},
+		#{proId,jdbcType=INTEGER},
+		#{proNum,jdbcType=INTEGER},
+		#{receiveraddress,jdbcType=VARCHAR},
+		#{receiverphone,jdbcType=VARCHAR},
+		#{receivername,jdbcType=VARCHAR},
+		#{oInfoMoney,jdbcType=DOUBLE}, #{paystate,jdbcType=INTEGER}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.an.entity.OrderInfo">
+		insert into tb_orderinfo
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="oInfoId != null">
+				o_info_id,
+			</if>
+			<if test="orderId != null">
+				order_id,
+			</if>
+			<if test="proId != null">
+				pro_id,
+			</if>
+			<if test="proNum != null">
+				pro_num,
+			</if>
+			<if test="receiveraddress != null">
+				receiverAddress,
+			</if>
+			<if test="receiverphone != null">
+				receiverPhone,
+			</if>
+			<if test="receivername != null">
+				receiverName,
+			</if>
+			<if test="oInfoMoney != null">
+				o_info_money,
+			</if>
+			<if test="paystate != null">
+				payState,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="oInfoId != null">
+				#{oInfoId,jdbcType=INTEGER},
+			</if>
+			<if test="orderId != null">
+				#{orderId,jdbcType=INTEGER},
+			</if>
+			<if test="proId != null">
+				#{proId,jdbcType=INTEGER},
+			</if>
+			<if test="proNum != null">
+				#{proNum,jdbcType=INTEGER},
+			</if>
+			<if test="receiveraddress != null">
+				#{receiveraddress,jdbcType=VARCHAR},
+			</if>
+			<if test="receiverphone != null">
+				#{receiverphone,jdbcType=VARCHAR},
+			</if>
+			<if test="receivername != null">
+				#{receivername,jdbcType=VARCHAR},
+			</if>
+			<if test="oInfoMoney != null">
+				#{oInfoMoney,jdbcType=DOUBLE},
+			</if>
+			<if test="paystate != null">
+				#{paystate,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.an.entity.OrderInfo">
+		update tb_orderinfo
+		<set>
+			<if test="orderId != null">
+				order_id = #{orderId,jdbcType=INTEGER},
+			</if>
+			<if test="proId != null">
+				pro_id = #{proId,jdbcType=INTEGER},
+			</if>
+			<if test="proNum != null">
+				pro_num = #{proNum,jdbcType=INTEGER},
+			</if>
+			<if test="receiveraddress != null">
+				receiverAddress = #{receiveraddress,jdbcType=VARCHAR},
+			</if>
+			<if test="receiverphone != null">
+				receiverPhone = #{receiverphone,jdbcType=VARCHAR},
+			</if>
+			<if test="receivername != null">
+				receiverName = #{receivername,jdbcType=VARCHAR},
+			</if>
+			<if test="oInfoMoney != null">
+				o_info_money = #{oInfoMoney,jdbcType=DOUBLE},
+			</if>
+			<if test="paystate != null">
+				payState = #{paystate,jdbcType=INTEGER},
+			</if>
+		</set>
+		where o_info_id = #{oInfoId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.an.entity.OrderInfo">
+		update
+		tb_orderinfo
+		set order_id = #{orderId,jdbcType=INTEGER},
+		pro_id =
+		#{proId,jdbcType=INTEGER},
+		pro_num = #{proNum,jdbcType=INTEGER},
+		receiverAddress = #{receiveraddress,jdbcType=VARCHAR},
+		receiverPhone =
+		#{receiverphone,jdbcType=VARCHAR},
+		receiverName =
+		#{receivername,jdbcType=VARCHAR},
+		o_info_money =
+		#{oInfoMoney,jdbcType=DOUBLE},
+		payState = #{paystate,jdbcType=INTEGER}
+		where o_info_id = #{oInfoId,jdbcType=INTEGER}
+	</update>
+
+	<!-- 查询所有订单详情表 -->
+	<select id="findAll" resultMap="BaseResultMap">
+		select * from tb_orderinfo
+	</select>
+
+	<!-- 根据订单id查询订单详情集合 -->
+	<select id="selectAllByOrderId" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from tb_orderinfo i where i.order_id=#{arg0}
+	</select>
+</mapper>

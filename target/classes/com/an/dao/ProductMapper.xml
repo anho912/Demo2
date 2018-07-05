@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.an.dao.ProductMapper">
+	<resultMap id="BaseResultMap" type="com.an.entity.Product">
+		<id column="pro_id" property="proId" jdbcType="INTEGER" />
+		<result column="pro_name" property="proName" jdbcType="VARCHAR" />
+		<result column="pro_price" property="proPrice" jdbcType="DOUBLE" />
+		<result column="pro_num" property="proNum" jdbcType="INTEGER" />
+		<result column="pro_category" property="proCategory" jdbcType="VARCHAR" />
+		<result column="pro_img" property="proImg" jdbcType="VARCHAR" />
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="pro_del" property="proDel" jdbcType="INTEGER" />
+	</resultMap>
+	<resultMap id="ResultMapWithBLOBs" type="com.an.entity.Product"
+		extends="BaseResultMap">
+		<result column="pro_description" property="proDescription"
+			jdbcType="LONGVARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		pro_id, pro_name, pro_price, pro_num, pro_category,
+		pro_img, create_date,
+		pro_del
+	</sql>
+	<sql id="Blob_Column_List">
+		pro_description
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from tb_product
+		where pro_id = #{proId,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		tb_product
+		where pro_id = #{proId,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.an.entity.Product">
+		insert into tb_product
+		(pro_id, pro_name, pro_price,
+		pro_num, pro_category, pro_img,
+		create_date, pro_del, pro_description
+		)
+		values
+		(#{proId,jdbcType=INTEGER}, #{proName,jdbcType=VARCHAR},
+		#{proPrice,jdbcType=DOUBLE},
+		#{proNum,jdbcType=INTEGER},
+		#{proCategory,jdbcType=VARCHAR}, #{proImg,jdbcType=VARCHAR},
+		#{createDate,jdbcType=TIMESTAMP}, #{proDel,jdbcType=INTEGER},
+		#{proDescription,jdbcType=LONGVARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.an.entity.Product">
+		insert into tb_product
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="proId != null">
+				pro_id,
+			</if>
+			<if test="proName != null">
+				pro_name,
+			</if>
+			<if test="proPrice != null">
+				pro_price,
+			</if>
+			<if test="proNum != null">
+				pro_num,
+			</if>
+			<if test="proCategory != null">
+				pro_category,
+			</if>
+			<if test="proImg != null">
+				pro_img,
+			</if>
+			<if test="createDate != null">
+				create_date,
+			</if>
+			<if test="proDel != null">
+				pro_del,
+			</if>
+			<if test="proDescription != null">
+				pro_description,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="proId != null">
+				#{proId,jdbcType=INTEGER},
+			</if>
+			<if test="proName != null">
+				#{proName,jdbcType=VARCHAR},
+			</if>
+			<if test="proPrice != null">
+				#{proPrice,jdbcType=DOUBLE},
+			</if>
+			<if test="proNum != null">
+				#{proNum,jdbcType=INTEGER},
+			</if>
+			<if test="proCategory != null">
+				#{proCategory,jdbcType=VARCHAR},
+			</if>
+			<if test="proImg != null">
+				#{proImg,jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				#{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="proDel != null">
+				#{proDel,jdbcType=INTEGER},
+			</if>
+			<if test="proDescription != null">
+				#{proDescription,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.an.entity.Product">
+		update tb_product
+		<set>
+			<if test="proName != null">
+				pro_name = #{proName,jdbcType=VARCHAR},
+			</if>
+			<if test="proPrice != null">
+				pro_price = #{proPrice,jdbcType=DOUBLE},
+			</if>
+			<if test="proNum != null">
+				pro_num = #{proNum,jdbcType=INTEGER},
+			</if>
+			<if test="proCategory != null">
+				pro_category = #{proCategory,jdbcType=VARCHAR},
+			</if>
+			<if test="proImg != null">
+				pro_img = #{proImg,jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				create_date = #{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="proDel != null">
+				pro_del = #{proDel,jdbcType=INTEGER},
+			</if>
+			<if test="proDescription != null">
+				pro_description = #{proDescription,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		where pro_id = #{proId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKeyWithBLOBs" parameterType="com.an.entity.Product">
+		update
+		tb_product
+		set pro_name = #{proName,jdbcType=VARCHAR},
+		pro_price =
+		#{proPrice,jdbcType=DOUBLE},
+		pro_num = #{proNum,jdbcType=INTEGER},
+		pro_category = #{proCategory,jdbcType=VARCHAR},
+		pro_img =
+		#{proImg,jdbcType=VARCHAR},
+		create_date =
+		#{createDate,jdbcType=TIMESTAMP},
+		pro_del = #{proDel,jdbcType=INTEGER},
+		pro_description = #{proDescription,jdbcType=LONGVARCHAR}
+		where pro_id =
+		#{proId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.an.entity.Product">
+		update tb_product
+		set pro_name = #{proName,jdbcType=VARCHAR},
+		pro_price =
+		#{proPrice,jdbcType=DOUBLE},
+		pro_num = #{proNum,jdbcType=INTEGER},
+		pro_category = #{proCategory,jdbcType=VARCHAR},
+		pro_img =
+		#{proImg,jdbcType=VARCHAR},
+		create_date =
+		#{createDate,jdbcType=TIMESTAMP},
+		pro_del = #{proDel,jdbcType=INTEGER}
+		where pro_id = #{proId,jdbcType=INTEGER}
+	</update>
+
+	<!-- 初始查询符合条件的总条数 -->
+	<select id="selectCount" parameterType="java.lang.String"
+		resultType="java.lang.Long">
+		select count(1) from tb_product p where p.pro_del=1 and p.pro_name like
+		#{arg0}
+	</select>
+
+	<!-- 根据分页条件查询数据 -->
+	<select id="findProductDataByPageAndCount" resultMap="BaseResultMap">
+		select
+		p.pro_id as proId,
+		p.pro_name as proName,
+		p.pro_price as proPrice,
+		p.pro_num as proNum,
+		p.pro_category as proCategory,
+		p.pro_img as proImg,
+		p.pro_description as proDescription,
+		p.pro_del as proDel,
+		p.create_date
+		as createDate
+		from
+		tb_product p where (p.pro_name like #{arg2} or p.pro_description like #{arg2}) and p.pro_del=#{arg3} limit
+		#{arg1},#{arg0}
+	</select>
+
+	<!-- 根据商品名查询一个商品 -->
+	<select id="findByProName" resultType="com.an.entity.Product">
+		select
+		p.pro_id as proId,
+		p.pro_name as proName,
+		p.pro_price as proPrice,
+		p.pro_num as
+		proNum,
+		p.pro_category as proCategory,
+		p.pro_img as proImg,
+		p.pro_description as proDescription,
+		p.pro_del as proDel,
+		p.create_date
+		as createDate
+		from tb_product p
+		where p.pro_name = #{arg0} and p.pro_del=1
+	</select>
+
+	<!-- 根据id删除一个商品 -->
+	<delete id="deleteById" parameterType="java.lang.Integer">
+		delete from tb_product
+		where
+		pro_id = #{arg0}
+	</delete>
+
+	<!-- 根据id查询一个商品 -->
+	<select id="findById" resultType="com.an.entity.Product">
+		select
+		p.pro_id as proId,
+		p.pro_name as proName,
+		p.pro_price as proPrice,
+		p.pro_num as
+		proNum,
+		p.pro_category as proCategory,
+		p.pro_img as proImg,
+		p.pro_description as proDescription,
+		p.pro_del as proDel,
+		p.create_date
+		as createDate
+		from tb_product p
+		where
+		p.pro_id = #{arg0} and p.pro_del=1
+	</select>
+	<!-- 根据id更新一个商品 -->
+	<update id="updateById" parameterType="com.an.entity.Product">
+		update tb_product
+		<set>
+			<if test="proName != null">pro_name = #{proName},</if>
+			<if test="proPrice != null">pro_price=#{proPrice},</if>
+			<if test="proNum != null">pro_num=#{proNum},</if>
+			<if test="proCategory != null">pro_category = #{proCategory},</if>
+			<if test="proImg != null">pro_img =#{proImg},</if>
+			<if test="proDescription != null">pro_description =#{proDescription},</if>
+			<if test="proDel != null">pro_del = #{proDel},</if>
+			<if test="createDate != null">create_date=#{createDate}</if>
+		</set>
+		where pro_id = #{proId} and pro_del=1
+	</update>
+	
+	<!-- 查询所有商品 -->
+	<select id="findAll" resultMap="BaseResultMap">
+		select * from tb_product p where p.pro_del=1
+	</select>
+</mapper>

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.an.dao.DictionaryMapper">
+	<resultMap id="BaseResultMap" type="com.an.entity.Dictionary">
+		<id column="dd_id" property="ddId" jdbcType="INTEGER" />
+		<result column="dd_name" property="ddName" jdbcType="VARCHAR" />
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		dd_id, dd_name, create_date
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from tb_dictionary
+		where dd_id = #{ddId,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		tb_dictionary
+		where dd_id = #{ddId,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.an.entity.Dictionary">
+		insert into tb_dictionary
+		(dd_id, dd_name, create_date
+		)
+		values (#{ddId,jdbcType=INTEGER},
+		#{ddName,jdbcType=VARCHAR},
+		#{createDate,jdbcType=TIMESTAMP}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.an.entity.Dictionary">
+		insert into tb_dictionary
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="ddId != null">
+				dd_id,
+			</if>
+			<if test="ddName != null">
+				dd_name,
+			</if>
+			<if test="createDate != null">
+				create_date,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="ddId != null">
+				#{ddId,jdbcType=INTEGER},
+			</if>
+			<if test="ddName != null">
+				#{ddName,jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				#{createDate,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.an.entity.Dictionary">
+		update tb_dictionary
+		<set>
+			<if test="ddName != null">
+				dd_name = #{ddName,jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				create_date = #{createDate,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where dd_id = #{ddId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.an.entity.Dictionary">
+		update
+		tb_dictionary
+		set dd_name = #{ddName,jdbcType=VARCHAR},
+		create_date =
+		#{createDate,jdbcType=TIMESTAMP}
+		where dd_id = #{ddId,jdbcType=INTEGER}
+	</update>
+
+	<!-- 初始查询符合条件的总条数 -->
+	<select id="selectCount" parameterType="java.lang.String"
+		resultType="java.lang.Long">
+		select count(1) from tb_dictionary d where d.dd_name like
+		#{searchStr}
+	</select>
+
+	<!-- 根据分页条件查询数据 -->
+	<select id="findDataByPageAndCount" resultMap="BaseResultMap">
+		select *
+		from
+		tb_dictionary d where d.dd_name like #{arg2} limit #{arg1},#{arg0}
+	</select>
+
+	<!-- 根据类目名查询 -->
+	<select id="findByDicName" resultType="com.an.entity.Dictionary">
+		select
+		d.dd_id as ddId,
+		d.dd_name as ddName,
+		d.create_date as createDate
+		from tb_dictionary d
+		where d.dd_name =
+		#{ddName}
+	</select>
+
+	<!-- 根据id删除 -->
+	<delete id="deleteById" parameterType="java.lang.Integer">
+		delete from tb_dictionary
+		where
+		dd_id = #{arg0}
+	</delete>
+
+	<!-- 根据id查询 -->
+	<select id="findById" resultType="com.an.entity.Dictionary">
+		select
+		d.dd_id as ddId,
+		d.dd_name as ddName,
+		d.create_date as createDate
+		from tb_dictionary d
+		where
+		d.dd_id =
+		#{valueOf}
+	</select>
+
+	<!-- 根据id更新一个商品 -->
+	<update id="updateById" parameterType="com.an.entity.Dictionary">
+		update tb_dictionary
+		<set>
+			<if test="ddName != null">dd_name = #{ddName},</if>
+			<if test="createDate != null">create_date=#{createDate}</if>
+		</set>
+		where dd_id = #{valueOf}
+	</update>
+
+	<!-- 查询所有类目 -->
+	<select id="findAll" resultMap="BaseResultMap">
+		select *
+		from tb_dictionary
+	</select>
+	
+</mapper>
