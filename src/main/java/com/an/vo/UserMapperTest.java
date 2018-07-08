@@ -52,4 +52,16 @@ public class UserMapperTest extends BaseTest{
 		return map;
 	}
 	
+	
+	/**
+	 * 取消订单
+	 * @param type  1.自动  2.手动
+	 * @return
+	 */
+	@RequestMapping("/路径")
+	@ResponseBody
+	public String updateOrderStatus(int type) {
+		//orderService.updateOrderStatus(type);
+		return "";
+	}
 }
